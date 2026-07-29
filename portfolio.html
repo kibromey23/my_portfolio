@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kibrom Getachew Gebregziabher — Machine Learning Engineer</title>
+<meta name="description" content="Kibrom Getachew Gebregziabher — Machine Learning Engineer &amp; Full-Stack Developer. Builder of CropGuard AI, a web-based crop disease diagnosis platform.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --bg:#0B0F19;
+  --bg-elevated:#121826;
+  --bg-elevated-2:#161E30;
+  --line:rgba(255,255,255,0.08);
+  --line-strong:rgba(255,255,255,0.14);
+  --text:#F5F7FA;
+  --text-muted:#8B93A7;
+  --text-dim:#5C6478;
+  --mint:#00E5A8;
+  --mint-dim:rgba(0,229,168,0.14);
+  --violet:#7C5CFF;
+  --violet-dim:rgba(124,92,255,0.16);
+  --display:'Space Grotesk',sans-serif;
+  --body:'Inter',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --radius:16px;
+  --radius-sm:10px;
+  --ease:cubic-bezier(.16,.8,.24,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--body);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+::selection{background:var(--mint);color:#04140F;}
+a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
+  outline:2px solid var(--mint);outline-offset:3px;border-radius:4px;
+}
+
+/* base grain / ambient background */
+body::before{
+  content:'';position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(60% 50% at 15% 0%, rgba(124,92,255,0.16), transparent 60%),
+    radial-gradient(50% 45% at 90% 15%, rgba(0,229,168,0.10), transparent 60%),
+    var(--bg);
+}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+
+/* ============================================================
+   SCROLL PROGRESS + HEADER
+   ============================================================ */
+#progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--mint),var(--violet));width:0%;z-index:200;transition:width .08s linear;}
+
+header{
+  position:fixed;top:0;left:0;right:0;z-index:150;
+  padding:18px 0;
+  transition:background .3s var(--ease),border-color .3s var(--ease),padding .3s var(--ease);
+  border-bottom:1px solid transparent;
+}
+header.scrolled{
+  background:rgba(11,15,25,0.72);
+  backdrop-filter:blur(16px) saturate(140%);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);
+  border-bottom:1px solid var(--line);
+  padding:14px 0;
+}
+.header-inner{display:flex;justify-content:space-between;align-items:center;gap:20px;}
+.brand{
+  font-family:var(--mono);font-size:13px;letter-spacing:0.02em;
+  display:flex;align-items:center;gap:10px;color:var(--text);
+}
+.brand .dot{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 4px var(--mint-dim);flex-shrink:0;}
+nav.mainnav{display:flex;gap:6px;background:rgba(255,255,255,0.03);border:1px solid var(--line);padding:5px;border-radius:99px;}
+nav.mainnav a{
+  font-family:var(--body);font-size:13.5px;font-weight:500;color:var(--text-muted);
+  padding:8px 16px;border-radius:99px;transition:color .2s ease,background .2s ease;
+  position:relative;
+}
+nav.mainnav a:hover{color:var(--text);}
+nav.mainnav a.active{color:var(--bg);background:var(--mint);}
+.navtoggle{display:none;background:rgba(255,255,255,0.04);border:1px solid var(--line);color:var(--text);font-size:16px;padding:8px 13px;border-radius:8px;}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{
+  font-family:var(--body);font-size:14px;font-weight:600;
+  padding:12px 22px;border-radius:10px;
+  border:1px solid var(--line-strong);color:var(--text);
+  display:inline-flex;align-items:center;gap:8px;
+  transition:transform .25s var(--ease),background .25s ease,border-color .25s ease,box-shadow .25s ease;
+  background:rgba(255,255,255,0.03);
+}
+.btn:hover{transform:translateY(-2px);border-color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.06);}
+.btn.primary{
+  background:linear-gradient(135deg,var(--mint),#00C494);
+  border-color:transparent;color:#04140F;
+  box-shadow:0 8px 24px -8px rgba(0,229,168,0.5);
+}
+.btn.primary:hover{box-shadow:0 12px 32px -8px rgba(0,229,168,0.65);transform:translateY(-2px);}
+.btn.ghost{background:transparent;}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap;}
+
+/* ============================================================
+   TYPE SCALE / SECTION SHELL
+   ============================================================ */
+main{position:relative;}
+section{padding:120px 0;border-bottom:1px solid var(--line);position:relative;}
+section:last-of-type{border-bottom:none;}
+.eyebrow{
+  font-family:var(--mono);font-size:12px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--mint);display:inline-flex;align-items:center;gap:9px;margin-bottom:18px;
+}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--mint);display:inline-block;}
+h1{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(38px,6.2vw,72px);line-height:1.04;letter-spacing:-0.02em;
+}
+h2{
+  font-family:var(--display);font-weight:600;
+  font-size:clamp(28px,3.6vw,42px);letter-spacing:-0.015em;margin-bottom:16px;
+}
+h3{font-family:var(--display);font-weight:600;}
+p{color:var(--text-muted);max-width:640px;}
+p + p{margin-top:14px;}
+.lede{
+  font-family:var(--body);font-weight:500;font-size:clamp(18px,2.1vw,21px);
+  color:var(--text);max-width:620px;margin-top:22px;line-height:1.5;
+}
+.section-head{margin-bottom:56px;}
+
+.gradient-text{
+  background:linear-gradient(120deg,var(--mint),var(--violet));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+#hero{padding-top:180px;padding-bottom:90px;border-bottom:none;overflow:hidden;}
+.hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:64px;align-items:center;}
+.hero-role{
+  font-family:var(--mono);font-size:15px;color:var(--violet);margin-top:18px;
+  min-height:22px;display:flex;align-items:center;
+}
+.hero-role .cursor{display:inline-block;width:2px;height:16px;background:var(--violet);margin-left:2px;animation:blink 1s step-end infinite;}
+@keyframes blink{50%{opacity:0;}}
+.hero-copy{margin-top:26px;max-width:580px;}
+.hero-links{margin-top:36px;}
+
+.fact-row{display:flex;gap:0;flex-wrap:wrap;margin-top:56px;border-top:1px solid var(--line);padding-top:0;}
+.fact{padding:22px 26px 0 0;flex:1;min-width:120px;}
+.fact .n{font-family:var(--display);font-size:26px;font-weight:700;color:var(--text);display:block;}
+.fact .l{font-family:var(--mono);font-size:11px;letter-spacing:0.05em;color:var(--text-dim);text-transform:uppercase;margin-top:6px;display:block;}
+
+/* signature diagnostic card */
+.diagnostic-card{
+  position:relative;background:linear-gradient(180deg,var(--bg-elevated),var(--bg-elevated-2));
+  border:1px solid var(--line-strong);border-radius:var(--radius);padding:26px;
+  box-shadow:0 30px 80px -30px rgba(0,0,0,0.6);
+  backdrop-filter:blur(20px);
+  transform:translateY(0);
+  animation:float 6s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+.diagnostic-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+.diagnostic-title{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;color:var(--text-dim);text-transform:uppercase;}
+.diagnostic-live{font-family:var(--mono);font-size:10.5px;color:var(--mint);display:flex;align-items:center;gap:6px;}
+.diagnostic-live .pulse{width:6px;height:6px;border-radius:50%;background:var(--mint);animation:pulse 1.8s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,229,168,0.5);}50%{opacity:.6;box-shadow:0 0 0 6px rgba(0,229,168,0);}}
+
+.scan-viewport{
+  position:relative;height:190px;border-radius:var(--radius-sm);
+  background:radial-gradient(circle at 50% 40%,rgba(0,229,168,0.10),rgba(124,92,255,0.06) 60%,transparent 80%),var(--bg);
+  border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.scan-viewport svg{width:88px;height:88px;position:relative;z-index:2;}
+.scan-viewport svg path{fill:none;stroke:var(--mint);stroke-width:2;filter:drop-shadow(0 0 6px rgba(0,229,168,0.5));}
+.scan-viewport svg path.vein{stroke:var(--violet);stroke-width:1.1;opacity:.7;filter:none;}
+.scan-line{position:absolute;left:0;right:0;height:2px;background:var(--mint);box-shadow:0 0 16px 3px rgba(0,229,168,0.6);animation:sweep 3s ease-in-out infinite;z-index:3;}
+@keyframes sweep{0%{top:6%;}50%{top:90%;}100%{top:6%;}}
+
+.diagnostic-readout{margin-top:18px;display:flex;justify-content:space-between;align-items:baseline;padding-bottom:16px;border-bottom:1px dashed var(--line);}
+.diagnostic-readout span{font-family:var(--mono);font-size:11.5px;color:var(--text-dim);letter-spacing:0.04em;text-transform:uppercase;}
+.diagnostic-readout b{font-family:var(--display);font-size:30px;font-weight:700;color:var(--mint);}
+.diagnostic-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;}
+.chip{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:0.03em;
+  border:1px solid var(--line-strong);padding:6px 11px;border-radius:99px;
+  color:var(--text-muted);background:rgba(255,255,255,0.03);
+}
+.chip.accent{color:var(--mint);border-color:rgba(0,229,168,0.35);background:var(--mint-dim);}
+.chip.violet{color:var(--violet);border-color:rgba(124,92,255,0.4);background:var(--violet-dim);}
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about-cols{display:grid;grid-template-columns:1.2fr 0.8fr;gap:64px;}
+.quicklist{list-style:none;}
+.quicklist li{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-top:1px solid var(--line);font-size:14px;}
+.quicklist li:last-child{padding-bottom:0;}
+.quicklist li span:first-child{color:var(--text-dim);}
+.quicklist li span:last-child{color:var(--text);font-family:var(--mono);font-size:12.5px;text-align:right;}
+
+/* ============================================================
+   GLASS CARD (shared)
+   ============================================================ */
+.glass{
+  background:rgba(255,255,255,0.025);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  backdrop-filter:blur(12px);
+  position:relative;
+  overflow:hidden;
+}
+.glass::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(320px circle at var(--mx,50%) var(--my,0%),rgba(0,229,168,0.10),transparent 60%);
+  opacity:0;transition:opacity .3s ease;
+}
+.glass:hover::before{opacity:1;}
+.glass:hover{border-color:var(--line-strong);transform:translateY(-4px);}
+.glass{transition:transform .3s var(--ease),border-color .3s ease;}
+
+/* ============================================================
+   FEATURED PROJECT
+   ============================================================ */
+.feature{display:grid;grid-template-columns:1fr 320px;gap:48px;align-items:start;}
+.feature-tags{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 22px;}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-sm);overflow:hidden;margin-top:26px;}
+.metric{background:var(--bg-elevated);padding:20px 16px;}
+.metric .val{font-family:var(--display);font-weight:700;font-size:22px;color:var(--mint);display:block;}
+.metric .lbl{font-family:var(--mono);font-size:10px;letter-spacing:0.05em;color:var(--text-dim);text-transform:uppercase;display:block;margin-top:6px;}
+.stack-line{font-family:var(--mono);font-size:12.5px;color:var(--text-dim);margin-top:24px;line-height:1.9;}
+.system-card{padding:26px;}
+.system-card .label{font-family:var(--mono);font-size:11px;color:var(--text-dim);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:14px;}
+
+/* ============================================================
+   PROJECT GRID
+   ============================================================ */
+.project-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px;}
+.pcard{padding:26px;display:flex;flex-direction:column;gap:12px;min-height:230px;}
+.pcard-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.pcard h3{font-size:19px;}
+.badge-dev{
+  font-family:var(--mono);font-size:10px;letter-spacing:0.04em;color:#FFC168;
+  background:rgba(255,193,104,0.12);border:1px solid rgba(255,193,104,0.35);
+  padding:4px 9px;border-radius:99px;white-space:nowrap;
+}
+.pcard .tags{display:flex;gap:6px;flex-wrap:wrap;}
+.pcard p{font-size:13.8px;color:var(--text-muted);}
+.pcard a.repo{font-family:var(--mono);font-size:12px;margin-top:auto;padding-top:10px;color:var(--mint);display:inline-flex;align-items:center;gap:6px;}
+.pcard a.repo:hover{color:#fff;}
+.dev-list{list-style:none;font-size:12.5px;color:var(--text-dim);margin-top:2px;display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;}
+.dev-list li::before{content:'— ';color:var(--text-dim);}
+
+/* ============================================================
+   ML PORTFOLIO
+   ============================================================ */
+.repo-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px;}
+.repo-card{padding:26px;}
+.repo-card .repo-name{font-family:var(--mono);font-size:12px;color:var(--violet);letter-spacing:0.03em;display:block;margin-bottom:8px;}
+.repo-card h3{font-size:18px;margin-bottom:12px;}
+.repo-card .tags{display:flex;gap:6px;flex-wrap:wrap;}
+.notebook-cta{margin-top:24px;font-family:var(--mono);font-size:13px;}
+.notebook-cta a{color:var(--mint);}
+.notebook-cta a:hover{color:#fff;}
+
+/* ============================================================
+   EXPERIENCE TIMELINE
+   ============================================================ */
+.timeline{position:relative;}
+.role{display:grid;grid-template-columns:160px 1fr;gap:28px;padding:30px 0;border-top:1px solid var(--line);position:relative;}
+.role:first-of-type{border-top:none;padding-top:0;}
+.role-period{font-family:var(--mono);font-size:12.5px;color:var(--text-dim);letter-spacing:0.03em;padding-top:4px;}
+.role-title{font-family:var(--display);font-weight:600;font-size:19px;margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.role-org{color:var(--mint);font-size:13px;margin-bottom:10px;display:block;font-family:var(--mono);}
+
+/* ============================================================
+   SKILLS
+   ============================================================ */
+.skill-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:8px;}
+.skill-block{padding:24px;}
+.skill-block h3{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;color:var(--violet);margin-bottom:14px;text-transform:uppercase;font-weight:600;}
+.skill-block ul{list-style:none;}
+.skill-block li{font-size:13.5px;padding:6px 0;color:var(--text-muted);display:flex;align-items:center;gap:8px;}
+.skill-block li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--mint);flex-shrink:0;}
+
+/* ============================================================
+   EDUCATION / CERTS
+   ============================================================ */
+.edu-card{padding:30px;margin-bottom:18px;}
+.edu-card .role-title{margin-bottom:8px;}
+.cgpa{font-family:var(--mono);font-size:13px;color:var(--mint);margin-top:8px;}
+.cert-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;}
+.cert-badge{
+  font-family:var(--mono);font-size:12px;color:var(--text-muted);
+  border:1px solid var(--line-strong);padding:9px 16px;border-radius:99px;
+  background:rgba(255,255,255,0.02);transition:border-color .2s ease,color .2s ease;
+}
+.cert-badge:hover{border-color:var(--mint);color:var(--text);}
+
+/* ============================================================
+   CONTACT / FOOTER
+   ============================================================ */
+#contact{text-align:left;}
+.contact-card{padding:56px;text-align:center;}
+.contact-card .lede{margin:0 auto;text-align:center;}
+.contact-card .btn-row{justify-content:center;margin-top:32px;}
+footer{padding:48px 0 60px;font-family:var(--mono);font-size:12px;color:var(--text-dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+footer a:hover{color:var(--mint);}
+
+/* ============================================================
+   REVEAL / MOTION
+   ============================================================ */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.reveal.in{opacity:1;transform:none;}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:980px){
+  .hero-grid,.about-cols,.feature{grid-template-columns:1fr;}
+  .project-grid{grid-template-columns:1fr 1fr;}
+  .repo-grid{grid-template-columns:1fr;}
+  .skill-grid{grid-template-columns:1fr 1fr;}
+  .metrics{grid-template-columns:1fr 1fr;}
+  nav.mainnav{display:none;}
+  .navtoggle{display:inline-block;}
+}
+@media (max-width:640px){
+  section{padding:80px 0;}
+  #hero{padding-top:130px;}
+  .project-grid{grid-template-columns:1fr;}
+  .skill-grid{grid-template-columns:1fr;}
+  .role{grid-template-columns:1fr;gap:8px;}
+  .fact-row{gap:20px;}
+  .fact{flex:1 1 40%;}
+  .contact-card{padding:32px 22px;}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  .scan-line,.diagnostic-card,.pulse,.cursor{animation:none;}
+  .reveal{opacity:1;transform:none;transition:none;}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<header id="siteHeader">
+  <div class="wrap header-inner">
+    <span class="brand"><span class="dot"></span>KIBROM G. GEBREGZIABHER</span>
+    <nav class="mainnav" aria-label="Section navigation">
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#ml-portfolio">ML Portfolio</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="navtoggle" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============================= HERO ============================= -->
+  <section id="hero" class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">Mekelle, Ethiopia · Open to relocation</span>
+        <h1>Kibrom Getachew<br><span class="gradient-text">Gebregziabher</span></h1>
+        <div class="hero-role"><span id="typedRole">Machine Learning Engineer</span><span class="cursor"></span></div>
+        <p class="lede">I build systems that turn a photograph into a diagnosis, and a dataset into a decision.</p>
+        <p class="hero-copy">BSc in Information Technology, Mekelle University – Mekelle Institute of Technology (CGPA 3.90/4.00). Lead developer of CropGuard AI, a full-stack, web-based crop disease detection platform. Three years as IT Laboratory Coordinator supporting 200+ students alongside the degree.</p>
+        <div class="btn-row hero-links">
+          <a class="btn primary" href="#work">View Projects</a>
+          <a class="btn ghost" href="https://github.com/kibromey23" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="btn ghost" href="https://www.linkedin.com/in/kibromey23" target="_blank" rel="noopener">LinkedIn ↗</a>
+        </div>
+        <div class="fact-row">
+          <div class="fact"><span class="n">3.90</span><span class="l">CGPA / 4.00</span></div>
+          <div class="fact"><span class="n">99.15%</span><span class="l">CropGuard val. accuracy</span></div>
+          <div class="fact"><span class="n">38</span><span class="l">Disease classes</span></div>
+          <div class="fact"><span class="n">3</span><span class="l">Years, lab coordinator</span></div>
+        </div>
+      </div>
+
+      <div class="diagnostic-card reveal">
+        <div class="diagnostic-head">
+          <span class="diagnostic-title">CropGuard AI · Inference</span>
+          <span class="diagnostic-live"><span class="pulse"></span>Live model</span>
+        </div>
+        <div class="scan-viewport">
+          <div class="scan-line"></div>
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <path d="M50 8 C 78 22, 88 52, 50 92 C 12 52, 22 22, 50 8 Z"/>
+            <path class="vein" d="M50 14 L50 86"/>
+            <path class="vein" d="M50 32 L30 22"/>
+            <path class="vein" d="M50 32 L70 22"/>
+            <path class="vein" d="M50 52 L26 44"/>
+            <path class="vein" d="M50 52 L74 44"/>
+            <path class="vein" d="M50 70 L32 64"/>
+            <path class="vein" d="M50 70 L68 64"/>
+          </svg>
+        </div>
+        <div class="diagnostic-readout">
+          <span>Diagnosis confidence</span>
+          <b><span id="counter">0</span>%</b>
+        </div>
+        <div class="diagnostic-tags">
+          <span class="chip accent">MobileNetV2</span>
+          <span class="chip">PlantVillage · 87,867 imgs</span>
+          <span class="chip violet">38 classes</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= ABOUT ============================= -->
+  <section id="about" class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Profile</span>
+      <h2>What I do</h2>
+    </div>
+    <div class="about-cols">
+      <div class="reveal">
+        <p>I work across the full stack of an applied ML product: training and evaluating the model, building the API that serves it, and shipping the interface that puts it in someone's hands. CropGuard AI, my capstone thesis, is the clearest example — a seven-person project where I led the ML pipeline, backend architecture, and deployment.</p>
+        <p>Outside coursework, I've built a habit of working problems end to end rather than in isolation: 25+ notebooks and scripts spanning preprocessing, classical ML, unsupervised learning, and deep learning, several following Andrew Ng's Stanford ML course exercises.</p>
+        <p>I'm trilingual in English, Amharic, and Tigrinya, and currently split my time between job applications, postgraduate scholarship preparation (Erasmus Mundus, DAAD, Chevening, Fulbright), and continued independent ML study.</p>
+      </div>
+      <div class="reveal">
+        <ul class="quicklist">
+          <li><span>Degree</span><span>BSc Information Technology, 2026</span></li>
+          <li><span>Institution</span><span>Mekelle University – MIT</span></li>
+          <li><span>CGPA</span><span>3.90 / 4.00</span></li>
+          <li><span>National IT Exit Exam</span><span>80%</span></li>
+          <li><span>Languages</span><span>EN · AM · TI</span></li>
+          <li><span>Location</span><span>Mekelle, Tigray, Ethiopia</span></li>
+          <li><span>Open to</span><span>ML, full-stack, research roles</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= FEATURED PROJECT ============================= -->
+  <section id="work" class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Featured Work</span>
+      <h2>CropGuard AI</h2>
+    </div>
+    <div class="feature">
+      <div class="reveal">
+        <div class="feature-tags">
+          <span class="chip accent">Capstone thesis</span>
+          <span class="chip">Computer vision</span>
+          <span class="chip">Web platform</span>
+          <span class="chip violet">7-person team, lead developer</span>
+        </div>
+        <p>Smallholder farmers in Tigray have little accessible means to diagnose crop disease before it costs them a season's yield. CropGuard AI is a web-based platform that lets a farmer upload a photo of a leaf and receive an instant, confidence-scored diagnosis, in their own language.</p>
+        <p>I trained a MobileNetV2-based CNN on the full PlantVillage dataset, then built JWT-authenticated APIs, per-user scan history, quota enforcement for a free/premium model, and a trilingual interface (English, Amharic, Tigrinya; 280+ localized keys). The whole system runs on free-tier infrastructure end to end.</p>
+        <div class="metrics">
+          <div class="metric"><span class="val">99.15%</span><span class="lbl">Validation accuracy</span></div>
+          <div class="metric"><span class="val">38</span><span class="lbl">Disease classes</span></div>
+          <div class="metric"><span class="val">87,867</span><span class="lbl">Training images</span></div>
+          <div class="metric"><span class="val">3</span><span class="lbl">Languages, 280+ keys</span></div>
+        </div>
+        <div class="stack-line">React / Vite &nbsp;·&nbsp; Node / Express &nbsp;·&nbsp; Python / FastAPI &nbsp;·&nbsp; TensorFlow / Keras &nbsp;·&nbsp; PostgreSQL &nbsp;·&nbsp; JWT &nbsp;·&nbsp; Railway &nbsp;·&nbsp; Neon.tech &nbsp;·&nbsp; Render</div>
+        <div class="btn-row hero-links">
+          <a class="btn" href="https://github.com/kibromey23/Crop_disease_detection_system" target="_blank" rel="noopener">View repo ↗</a>
+        </div>
+      </div>
+      <div class="glass system-card reveal">
+        <p class="label">System components</p>
+        <ul class="quicklist" style="margin-top:0;">
+          <li><span>Web frontend</span><span>React / Vite</span></li>
+          <li><span>API server</span><span>Node / Express</span></li>
+          <li><span>ML server</span><span>Python / FastAPI</span></li>
+          <li><span>Model</span><span>MobileNetV2 CNN</span></li>
+          <li><span>Database</span><span>PostgreSQL</span></li>
+          <li><span>Auth</span><span>JWT + quotas</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:90px;">
+      <div class="section-head reveal">
+        <span class="eyebrow">Other Projects</span>
+        <h2 style="margin-bottom:0;">Selected builds</h2>
+      </div>
+      <div class="project-grid" style="margin-top:40px;">
+        <div class="pcard glass reveal">
+          <div class="pcard-top"><h3>MeMi Tourism Recommender</h3></div>
+          <div class="tags"><span class="chip">Recommender systems</span><span class="chip">Internship</span></div>
+          <p>Hybrid recommendation engine for a tourism platform, combining collaborative filtering and content-based approaches. Built the feature-engineering pipeline in Pandas/NumPy, with backend exposure via FastAPI.</p>
+          <a class="repo" href="https://github.com/kibromey23/MeMI_Tourism_personalized_recommendation_system" target="_blank" rel="noopener">View repo ↗</a>
+        </div>
+        <div class="pcard glass reveal">
+          <div class="pcard-top"><h3>KB Electronics</h3></div>
+          <div class="tags"><span class="chip">PrestaShop</span><span class="chip">E-commerce</span></div>
+          <p>A customized PrestaShop storefront for an electronics retailer: product catalogue, authentication, cart, and order management, with a responsive front end.</p>
+          <a class="repo" href="https://github.com/kibromey23/E_Commerce_PrestaShop" target="_blank" rel="noopener">View repo ↗</a>
+        </div>
+        <div class="pcard glass reveal">
+          <div class="pcard-top"><h3>Hiyab Tech</h3><span class="badge-dev">🚧 In Development</span></div>
+          <div class="tags"><span class="chip">Founder</span><span class="chip">EdTech</span></div>
+          <p>Educational technology platform currently being developed for Ethiopian students. Currently under active development — not yet deployed.</p>
+          <ul class="dev-list">
+            <li>Architecture</li><li>Backend</li>
+            <li>Frontend</li><li>Authentication</li>
+            <li>Course management</li><li>Database design</li>
+          </ul>
+          <a class="repo" href="https://github.com/kibromey23/Hiyab-tech" target="_blank" rel="noopener">View repo ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= ML PORTFOLIO ============================= -->
+  <section id="ml-portfolio" class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Learning Log</span>
+      <h2>Machine Learning Portfolio</h2>
+      <p>25+ notebooks across five areas of applied ML — a working record of self-directed study, kept as a public GitHub habit rather than a portfolio piece.</p>
+    </div>
+    <div class="repo-grid">
+      <div class="repo-card glass reveal">
+        <span class="repo-name">data_preprocessing/</span>
+        <h3>Data Analysis</h3>
+        <div class="tags">
+          <span class="chip">Gradient descent</span><span class="chip">Cross-validation</span>
+          <span class="chip">GridSearchCV vs RandomizedSearchCV</span><span class="chip">One-hot &amp; label encoding</span>
+          <span class="chip">Confusion matrix</span><span class="chip">Pandas / NumPy / Seaborn</span>
+        </div>
+      </div>
+      <div class="repo-card glass reveal">
+        <span class="repo-name">supervised_learning/</span>
+        <h3>Supervised Learning</h3>
+        <div class="tags">
+          <span class="chip">Big Mart sales prediction</span><span class="chip">MNIST digit classification</span>
+          <span class="chip">Rock vs. mine (SONAR)</span><span class="chip">Fraud detection</span>
+          <span class="chip">Heart disease prediction</span><span class="chip">Logistic regression from scratch</span>
+        </div>
+      </div>
+      <div class="repo-card glass reveal">
+        <span class="repo-name">unsupervised_learning/</span>
+        <h3>Recommendation Systems</h3>
+        <div class="tags">
+          <span class="chip">Collaborative filtering</span><span class="chip">Customer segmentation</span>
+          <span class="chip">Movie recommendation system</span><span class="chip">IMDB clustering</span>
+        </div>
+      </div>
+      <div class="repo-card glass reveal">
+        <span class="repo-name">Deep_Learning/</span>
+        <h3>Deep Learning</h3>
+        <div class="tags">
+          <span class="chip">Customer churn prediction</span><span class="chip">Handwritten digit classification</span>
+        </div>
+      </div>
+      <div class="repo-card glass reveal" style="grid-column:1 / -1;">
+        <span class="repo-name">ML_Algorithms/</span>
+        <h3>Computer Vision &amp; Core Algorithms — Stanford ML Course</h3>
+        <div class="tags">
+          <span class="chip">Ex1: Linear regression</span><span class="chip">Ex2: Logistic regression</span>
+          <span class="chip">Ex3: Multi-class classification</span><span class="chip">Ex4: Neural networks</span>
+          <span class="chip">Ex5: Bias-variance</span><span class="chip">Ex6: SVMs</span>
+          <span class="chip">Ex7: K-means &amp; PCA</span><span class="chip">Ex8: Anomaly detection &amp; recommenders</span>
+        </div>
+      </div>
+    </div>
+    <p class="notebook-cta reveal"><a href="https://github.com/kibromey23?tab=repositories" target="_blank" rel="noopener">Browse all repositories on GitHub ↗</a></p>
+  </section>
+
+  <!-- ============================= EXPERIENCE ============================= -->
+  <section id="experience" class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Experience</span>
+      <h2>Track record</h2>
+    </div>
+    <div class="timeline">
+      <div class="role reveal">
+        <div class="role-period">2025 — 2026</div>
+        <div>
+          <span class="role-title">Recommendation System Engineer, Intern</span>
+          <span class="role-org">MeMi Tourism Platform · 4 months</span>
+          <p>Contributed to a hybrid recommendation engine combining collaborative and content-based filtering for personalized destination and service recommendations, working on the feature-engineering pipeline and FastAPI backend exposure.</p>
+        </div>
+      </div>
+      <div class="role reveal">
+        <div class="role-period">2023 — 2026</div>
+        <div>
+          <span class="role-title">IT Laboratory Coordinator</span>
+          <span class="role-org">Mekelle Institute of Technology, ICT Club</span>
+          <p>Ran the departmental computer lab for 200+ students alongside coursework: hardware, software deployment, and network diagnostics, plus mentoring junior students in Python and applied ML. Recognized by MIT's Student Union and Dean's Office for the full 2023–2026 span.</p>
+        </div>
+      </div>
+      <div class="role reveal">
+        <div class="role-period">2025 — 2026</div>
+        <div>
+          <span class="role-title">Founder &amp; Lead Developer <span class="badge-dev">🚧 In Development</span></span>
+          <span class="role-org">Hiyab Tech</span>
+          <p>Currently building an educational technology platform for Ethiopian students — architecture, backend, frontend, authentication, and course management. Not yet deployed; future deployment planned.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= SKILLS ============================= -->
+  <section id="skills" class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Skills</span>
+      <h2>Tools &amp; stack</h2>
+    </div>
+    <div class="skill-grid">
+      <div class="skill-block glass reveal">
+        <h3>Machine Learning</h3>
+        <ul>
+          <li>Python</li><li>TensorFlow</li><li>PyTorch</li><li>Scikit-Learn</li>
+        </ul>
+      </div>
+      <div class="skill-block glass reveal">
+        <h3>Data</h3>
+        <ul>
+          <li>Pandas</li><li>NumPy</li><li>PostgreSQL</li><li>MongoDB</li>
+        </ul>
+      </div>
+      <div class="skill-block glass reveal">
+        <h3>Backend &amp; Frontend</h3>
+        <ul>
+          <li>FastAPI</li><li>Node.js</li><li>Express</li><li>React</li>
+        </ul>
+      </div>
+      <div class="skill-block glass reveal">
+        <h3>Infra &amp; Tools</h3>
+        <ul>
+          <li>Git</li><li>Linux</li><li>Docker</li><li>Cisco CCNA fundamentals</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= EDUCATION / CERTS ============================= -->
+  <section id="education" class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Education &amp; Certifications</span>
+      <h2>Background</h2>
+    </div>
+    <div class="edu-card glass reveal">
+      <span class="role-title">BSc, Information Technology</span>
+      <span class="role-org">Mekelle University – Mekelle Institute of Technology, 2026</span>
+      <p class="cgpa">CGPA: 3.90 / 4.00 · National IT Exit Examination: 80%</p>
+    </div>
+    <div class="reveal">
+      <div class="cert-grid">
+        <span class="cert-badge">Cisco CCNA — Intro to Networks</span>
+        <span class="cert-badge">Kaggle — Intro to ML</span>
+        <span class="cert-badge">Kaggle — AI Ethics</span>
+        <span class="cert-badge">Kaggle — Intermediate ML</span>
+        <span class="cert-badge">Kaggle — Intro to Deep Learning</span>
+        <span class="cert-badge">Simplilearn — ML Using Python</span>
+        <span class="cert-badge">Simplilearn — Intro to AI</span>
+        <span class="cert-badge">Simplilearn — Intro to Cyber Security</span>
+        <span class="cert-badge">Simplilearn — Project Management 101</span>
+        <span class="cert-badge">Gebeya — ML Fundamentals</span>
+        <span class="cert-badge">MasterCard Foundation / EDVAC — Computer Maintenance</span>
+        <span class="cert-badge">DOT Ethiopia — Digital Skills</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= CONTACT ============================= -->
+  <section id="contact" class="wrap" style="border-bottom:none;">
+    <div class="glass contact-card reveal">
+      <span class="eyebrow">Contact</span>
+      <h2>Let's build something</h2>
+      <p class="lede">Kibrom Getachew Gebregziabher — open to machine learning, full-stack, and research-oriented roles, as well as postgraduate opportunities.</p>
+      <div class="btn-row">
+        <a class="btn primary" href="mailto:kibromey23@gmail.com">kibromey23@gmail.com</a>
+        <a class="btn" href="tel:+251906071623">+251 906 071 623</a>
+        <a class="btn" href="https://www.linkedin.com/in/kibromey23" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn" href="https://github.com/kibromey23" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>Kibrom Getachew Gebregziabher, Mekelle, Ethiopia — 2026</span>
+  <span><a href="https://github.com/kibromey23" target="_blank" rel="noopener">github.com/kibromey23</a> · <a href="https://www.linkedin.com/in/kibromey23" target="_blank" rel="noopener">linkedin.com/in/kibromey23</a></span>
+</footer>
+
+<script>
+(function(){
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- scroll progress ---------- */
+  const progress = document.getElementById('progress');
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    progress.style.width = pct + '%';
+    header.classList.toggle('scrolled', h.scrollTop > 12);
+  }, {passive:true});
+
+  /* ---------- mobile nav toggle ---------- */
+  const toggle = document.querySelector('.navtoggle');
+  const nav = document.querySelector('nav.mainnav');
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      const isOpen = nav.style.display === 'flex';
+      nav.style.display = isOpen ? 'none' : 'flex';
+      nav.style.flexDirection = 'column';
+      nav.style.position = 'absolute';
+      nav.style.top = '58px';
+      nav.style.right = '20px';
+      nav.style.background = 'rgba(18,24,38,0.96)';
+      nav.style.backdropFilter = 'blur(16px)';
+      nav.style.border = '1px solid var(--line)';
+      nav.style.borderRadius = '14px';
+      nav.style.padding = '10px';
+      nav.style.gap = '4px';
+    });
+  }
+
+  /* ---------- active nav link on scroll ---------- */
+  const navLinks = document.querySelectorAll('nav.mainnav a');
+  const sections = Array.from(navLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = '#' + entry.target.id;
+      const link = document.querySelector(`nav.mainnav a[href="${id}"]`);
+      if (!link) return;
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  }, {rootMargin:'-45% 0px -50% 0px'});
+  sections.forEach(s => navObserver.observe(s));
+
+  /* ---------- typing effect for hero role ---------- */
+  const roles = ['Machine Learning Engineer', 'AI Developer', 'Full-Stack Developer'];
+  const typedEl = document.getElementById('typedRole');
+  if (typedEl && !prefersReduced) {
+    let roleIdx = 0, charIdx = roles[0].length, deleting = false;
+    function tick(){
+      const current = roles[roleIdx];
+      if (!deleting) {
+        charIdx++;
+        if (charIdx > current.length) { deleting = true; setTimeout(tick, 1600); return; }
+      } else {
+        charIdx--;
+        if (charIdx < 0) { deleting = false; roleIdx = (roleIdx + 1) % roles.length; charIdx = 0; }
+      }
+      typedEl.textContent = current.slice(0, charIdx);
+      setTimeout(tick, deleting ? 35 : 65);
+    }
+    typedEl.textContent = '';
+    charIdx = 0;
+    setTimeout(tick, 500);
+  }
+
+  /* ---------- confidence counter ---------- */
+  const counter = document.getElementById('counter');
+  function animateCounter(){
+    if (prefersReduced) { counter.textContent = '99.15'; return; }
+    let start = null;
+    const duration = 2200, target = 99.15;
+    function step(ts){
+      if (!start) start = ts;
+      const p = Math.min((ts - start) / duration, 1);
+      counter.textContent = (p * target).toFixed(1);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  const heroObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { animateCounter(); heroObserver.disconnect(); } });
+  }, {threshold:0.4});
+  const viewport = document.querySelector('.scan-viewport');
+  if (viewport) heroObserver.observe(viewport);
+
+  /* ---------- metric count-up (featured project) ---------- */
+  const metricTargets = [
+    {val:99.15, suffix:'%', decimals:2},
+    {val:38, suffix:'', decimals:0},
+    {val:87867, suffix:'', decimals:0, format:true},
+    {val:3, suffix:'', decimals:0}
+  ];
+  const metricEls = document.querySelectorAll('.metric .val');
+  function animateMetrics(){
+    if (prefersReduced) return;
+    metricEls.forEach((el, i) => {
+      const cfg = metricTargets[i]; if (!cfg) return;
+      let start = null; const duration = 1800;
+      function step(ts){
+        if (!start) start = ts;
+        const p = Math.min((ts - start) / duration, 1);
+        const val = p * cfg.val;
+        el.textContent = (cfg.format ? Math.round(val).toLocaleString() : val.toFixed(cfg.decimals)) + cfg.suffix;
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }
+  const metricsEl = document.querySelector('.metrics');
+  if (metricsEl) {
+    const metricsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { animateMetrics(); metricsObserver.disconnect(); } });
+    }, {threshold:0.4});
+    metricsObserver.observe(metricsEl);
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('in'), (i % 3) * 80);
+        revealObserver.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  /* ---------- glass card spotlight (mouse tracking) ---------- */
+  if (!prefersReduced) {
+    document.querySelectorAll('.glass').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+        card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+      });
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
