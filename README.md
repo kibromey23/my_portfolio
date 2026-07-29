@@ -1,60 +1,36 @@
-# 🚀 Kibrom Getachew | AI & Machine Learning Portfolio
+# 🚀 Personal Portfolio Website
 
-<p align="center">
-<b>Machine Learning Engineer | AI Developer | Full-Stack Developer</b>
-</p>
+A modern, responsive portfolio website showcasing my journey as a **Machine Learning Engineer, AI Developer, and Full-Stack Developer**.
 
-Welcome to my portfolio! I build AI-powered solutions and intelligent software systems using Machine Learning, Deep Learning, and modern web technologies.
+This website presents my technical skills, projects, education, and experience through a clean and professional interface designed for recruiters, researchers, and collaborators.
 
 ---
 
-## 🛠️ Skills
+## ✨ Features
 
-**AI & Machine Learning**
-- Python, TensorFlow, Keras
-- Computer Vision
-- Deep Learning
-- Data Analysis
-- Model Deployment
-
-**Development**
-- HTML, CSS, JavaScript
-- React.js
-- Flask, FastAPI
-- SQL & Databases
-- Git & GitHub
+✅ Modern and responsive UI  
+✅ Professional introduction and profile section  
+✅ Interactive project showcase  
+✅ Technical skills overview  
+✅ Education and experience timeline  
+✅ Contact section with useful links  
+✅ Optimized for desktop and mobile devices  
 
 ---
 
-## 🚀 Featured Projects
+## 🛠️ Technologies
 
-🌱 **CropGuard AI**  
-AI-based plant disease detection system using deep learning and computer vision.
-
-🏨 **MeMi Tourism Recommendation System**  
-Machine learning recommendation platform for personalized tourism experiences.
-
-🛒 **KB Electronics**  
-Full-stack e-commerce platform for electronic products.
-
-📊 **ML Projects**
-- Sales Prediction
-- MNIST Classification
-- Rock vs Mine Prediction
+- HTML5
+- CSS3
+- JavaScript
 
 ---
 
-## 🎓 Education
+## 🚀 Highlights
 
-**BSc in Information Technology**  
-Mekelle University – Mekelle Institute of Technology  
-CGPA: 3.90/4.00
+- Showcases AI and Machine Learning projects
+- Demonstrates software development skills
+- Provides a professional online presence
+- Designed with simplicity, accessibility, and user experience in mind
 
----
-
-## 📫 Connect
-
-📧 kibromey23@gmail.com  
-🔗 GitHub: github.com/kibromey23
-
-⭐ Open to AI research, collaboration, and career opportunities.
+--
