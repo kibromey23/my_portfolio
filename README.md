@@ -31,6 +31,4 @@ This website presents my technical skills, projects, education, and experience t
 - Showcases AI and Machine Learning projects
 - Demonstrates software development skills
 - Provides a professional online presence
-- Designed with simplicity, accessibility, and user experience in mind
-
---
+- Designed with simplicity, accessibility, and user experience in mind.
