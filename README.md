@@ -1,6 +1,6 @@
 # 🚀 Personal Portfolio Website
 
-A modern, responsive portfolio website showcasing my journey as a **Machine Learning Engineer, AI Developer, and Full-Stack Developer**.
+A modern, responsive portfolio website showcasing my journey as a **Machine Learning Engineer, AI Developer**.
 
 This website presents my technical skills, projects, education, and experience through a clean and professional interface designed for recruiters, researchers, and collaborators.
 
